@@ -69,9 +69,9 @@ def main():
             #model=load_model(open(r'Model/keras_bestmodel.h5',"rb"))
             model=load_model(r'Model\keras_bestmodel.h5',"rb")
             st.write("hello")
-            ethnicity_African_American,ethnicity_Other_Unknown,ethnicity_Asian,ethnicity_Native_American=0,0,0,0
+            ethnicity_African_American,ethnicity_Other_Unknown,ethnicity_Asian,ethnicity_Native_American=0.0,0.0,0.0,0.0
             if ethinicity == 'African American':
-                ethnicity_African_American =1
+                ethnicity_African_American =1.0
             elif ethinicity == 'ethnicity_Other/Unknown':    
                 ethnicity_Other_Unknown =1
             elif ethinicity == 'ethnicity_Asian':
