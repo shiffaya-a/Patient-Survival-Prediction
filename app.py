@@ -66,18 +66,17 @@ def main():
         submit = st.form_submit_button("Predict")
 
         if submit:
-            #model=load_model(open(r'Model/keras_bestmodel.h5',"rb"))
-            model=load_model(r'Model\keras_bestmodel.h5',"rb")
-            st.write("hello")
-            ethnicity_African_American,ethnicity_Other_Unknown,ethnicity_Asian,ethnicity_Native_American=0.0,0.0,0.0,0.0
+            ethnicity_African_American,ethnicity_Other_Unknown,ethnicity_Asian,ethnicity_Native_American,ethnicity_Hispanic=0,0,0,0,0
             if ethinicity == 'African American':
-                ethnicity_African_American =1.0
-            elif ethinicity == 'ethnicity_Other/Unknown':    
-                ethnicity_Other_Unknown =1
-            elif ethinicity == 'ethnicity_Asian':
-                ethnicity_Asian = 1
+                 ethnicity_African_American =1
+            elif ethinicity == 'Other/Unknown':    
+                 ethnicity_Other_Unknown =1
+            elif ethinicity == 'Asian':
+                 ethnicity_Asian = 1
+            elif ethinicity == 'Hispanic' :
+                 ethnicity_Hispanic =1  
             else:
-                ethnicity_Native_American=1
+                 ethnicity_Native_American=1
 
             hospital_admit_source_Emergency_Department=0
             hospital_admit_source_Direct_Admit=0
@@ -86,18 +85,19 @@ def main():
             hospital_admit_source_Other_Hospital=0
             hospital_admit_source_Recovery_Room =0
 
-            if hospital_admit_source == 'hospital_admit_source_Emergency_Department':
-               hospital_admit_source_Emergency_Department =1
-            elif hospital_admit_source == 'hospital_admit_source_Direct_Admit':  
+            if hospital_admit_source == 'Emergency Department':
+                hospital_admit_source_Emergency_Department =1
+            elif hospital_admit_source == 'Direct Admit':  
                 hospital_admit_source_Direct_Admit =1 
-            elif hospital_admit_source == 'hospital_admit_source_Floor':
+            elif hospital_admit_source =='Floor':
                 hospital_admit_source_Floor =1
-            elif hospital_admit_source == 'hospital_admit_source_Acute_Care_Floor':
+            elif hospital_admit_source == 'AcuteCare/Floor':
                 hospital_admit_source_Acute_Care_Floor=1        
-            elif  hospital_admit_source == 'hospital_admit_source_Other_Hospital':
+            elif  hospital_admit_source == 'Other Hospital':
                 hospital_admit_source_Other_Hospital =1
             else :
                 hospital_admit_source_Recovery_Room = 1
+
             
             icu_type_SICU=0
             icu_type_CTICU=0
@@ -107,31 +107,30 @@ def main():
             icu_type_Neuro_ICU=0
             icu_stay_type_transfer=0
 
-            if icu_type == 'icu_type_SICU':
+            if icu_type == 'SICU':
                 icu_type_SICU = 1
-            elif icu_type == 'icu_type_CTICU':
+            elif icu_type == 'CTICU':
                 icu_type_CTICU =1
-            elif icu_type == 'icu_type_CCU_CTICU':
+            elif icu_type == 'CCU-CTICU':
                 icu_type_CCU_CTICU=1
-            elif  icu_type == 'icu_type_MICU':
+            elif  icu_type == 'MICU':
                 icu_type_MICU=1
-            elif  icu_type == 'icu_type_Cardiac_ICU':
+            elif  icu_type == 'Cardiac ICU':
                 icu_type_Cardiac_ICU=1
-            elif icu_type == 'icu_type_Neuro_ICU':
+            elif icu_type == 'Neuro ICU':
                 icu_type_Neuro_ICU=1
             else:
                 icu_stay_type_transfer=1
 
-            data=np.array(['ventilated_apache', 'gcs_motor_apache', 'gcs_verbal_apache','gcs_eyes_apache', 'apache_4a_hospital_death_prob', 'albumin_apache',
-       'apache_4a_icu_death_prob', 'd1_albumin_avg', 'd1_bun_avg','bun_apache', 'intubated_apache', 'd1_spo2_avg', 'h1_inr_avg',
-       'd1_inr_avg', 'd1_sysbp_avg', 'd1_sysbp_noninvasive_avg','d1_arterial_ph_avg', 'age', 'h1_resprate_avg', 'd1_mbp_avg','ethnicity_African_American',
-       'hospital_admit_source_Emergency Department', 'ethnicity_Other_Unknown','hospital_admit_source_Direct_Admit', 'ethnicity_Hispanic',
-       'icu_type_SICU', 'icu_type_CTICU', 'icu_type_CCU-CTICU','icu_type_MICU', 'icu_type_Cardiac_ICU', 'hospital_admit_source_Floor','hospital_admit_source_Acute_Care_Floor', 'ethnicity_Asian',
-       'icu_type_Neuro_ICU', 'icu_stay_type_transfer','ethnicity_Native_American', 'hospital_admit_source_Other_Hospital','hospital_admit_source_Recovery_Room']).reshape(1,-1)
+
+            data=np.array([ventilated_apache,gcs_motor_apache,gcs_verbal_apache,gcs_eyes_apache,apache_4a_hospital_death_prob,albumin_apache,apache_4a_icu_death_prob,
+               d1_albumin_avg,d1_bun_avg,bun_apache,intubated_apache,d1_spo2_avg,h1_inr_avg,d1_inr_avg,d1_sysbp_avg,d1_sysbp_noninvasive_avg,d1_arterial_ph_avg,
+               age,h1_resprate_avg,d1_mbp_avg,ethnicity_African_American,hospital_admit_source_Emergency_Department,ethnicity_Other_Unknown,hospital_admit_source_Direct_Admit,ethnicity_Hispanic,
+               icu_type_SICU,icu_type_CTICU,icu_type_CCU_CTICU,icu_type_MICU,icu_type_Cardiac_ICU,hospital_admit_source_Floor,hospital_admit_source_Acute_Care_Floor,ethnicity_Asian,
+               icu_type_Neuro_ICU,icu_stay_type_transfer,ethnicity_Native_American,hospital_admit_source_Other_Hospital,hospital_admit_source_Recovery_Room]).reshape(1,-1)
             
-            df=pd.DataFrame(data)
-                  
-            pred=model.predict(df)
+        
+            pred=model.predict(data)
             if pred[0] == 0:
                 result = 'Alive'
             else:
