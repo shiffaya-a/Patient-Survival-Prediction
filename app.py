@@ -66,6 +66,7 @@ def main():
         submit = st.form_submit_button("Predict")
 
         if submit:
+            model=load_model(r'Model\keras_bestmodel.h5',"rb")  
             ethnicity_African_American,ethnicity_Other_Unknown,ethnicity_Asian,ethnicity_Native_American,ethnicity_Hispanic=0,0,0,0,0
             if ethinicity == 'African American':
                  ethnicity_African_American =1
