@@ -129,9 +129,9 @@ def main():
        'icu_type_SICU', 'icu_type_CTICU', 'icu_type_CCU-CTICU','icu_type_MICU', 'icu_type_Cardiac_ICU', 'hospital_admit_source_Floor','hospital_admit_source_Acute_Care_Floor', 'ethnicity_Asian',
        'icu_type_Neuro_ICU', 'icu_stay_type_transfer','ethnicity_Native_American', 'hospital_admit_source_Other_Hospital','hospital_admit_source_Recovery_Room']).reshape(1,-1)
             
-            
-            st.write(data)
-            pred=model.predict(data)
+            df=pd.DataFrame(data)
+                  
+            pred=model.predict(df)
             if pred[0] == 0:
                 result = 'Alive'
             else:
