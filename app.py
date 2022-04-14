@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 #import joblib
 import requests
-import tensorflow 
+import tensorflow as tf
 import tensorflow.compat.v1.keras.backend as K 
 tf.compat.v1.disable_eager_execution()
 import keras
